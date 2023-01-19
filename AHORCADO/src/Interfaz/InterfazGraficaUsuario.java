@@ -1,115 +1,114 @@
 package Interfaz;
 
-import Ahorcado.Palabras;
-
+import JuegoAhorcado.DescripcionPalabrasJuegoDelAhorcado;
+import JuegoAhorcado.PalabrasJuegoDelAhorcado;
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfazGraficaUsuario extends JFrame {
-
-
-
     public static final String RUTA_IMAGEN = "./AHORCADO/src/Imagenes/LOGO.png" ;
-    private Palabras palabras;
-    private PanelAhorcado panelAhorcado;
-    private PanelEnunciado panelEnunciado;
-    private PanelDescripcion panelDescripcion;
-    private PanelLetras panelLetras;
+    private PalabrasJuegoDelAhorcado palabrasJuegoAhorcado;
+    private DescripcionPalabrasJuegoDelAhorcado descripcionPalabras;
+    private PanelImagenesJuegoAhorcado panelAhorcado;
+    private PanelImagenesDescriptivas panelEnunciado;
+    private PanelDescripcionDeLaPalabraDelaAhorcado panelDescripcion;
+    private PanelLetra panelLetras;
     private PanelEscogerLetras panelEscogerLetra;
+    private Integer contador;
 
 
     public InterfazGraficaUsuario(){
-
-
-        setTitle( " EL AHORCADO " );
-        setSize( 1000, 760 );
+        setTitle( " BIENVENIDO JUEGO EL AHORCADO " );
+        setSize( 1000, 730 );
         setResizable( false );
         setLocationRelativeTo( null );
         setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        contador = 0;
 
         setLayout( new BorderLayout( ) );
-        palabras = new Palabras(this);
-
+        palabrasJuegoAhorcado = new PalabrasJuegoDelAhorcado(this);
+        descripcionPalabras = new DescripcionPalabrasJuegoDelAhorcado();
 
         JLabel labImagen = new JLabel( );
         labImagen.setIcon( new ImageIcon( RUTA_IMAGEN ) );
         labImagen.setIcon( new ImageIcon( new ImageIcon( RUTA_IMAGEN ).getImage( ).
-                getScaledInstance( 1000, 250, Image.SCALE_DEFAULT )  ));
+                getScaledInstance( 1000, 200, Image.SCALE_DEFAULT )  ));
         add( labImagen, BorderLayout.NORTH );
-        obtenerArreglo();
 
         JPanel panelCentro = new JPanel( );
         panelCentro.setLayout( new BorderLayout( ) );
         add( panelCentro, BorderLayout.CENTER );
 
-            panelAhorcado = new PanelAhorcado( this );
+            panelAhorcado = new PanelImagenesJuegoAhorcado( this );
             panelCentro.add( panelAhorcado, BorderLayout.WEST );
 
-            panelEnunciado = new PanelEnunciado(this);
+            panelEnunciado = new PanelImagenesDescriptivas(this);
             panelCentro.add( panelEnunciado, BorderLayout.EAST);
 
-
-            panelDescripcion = new PanelDescripcion(this);
+            panelDescripcion = new PanelDescripcionDeLaPalabraDelaAhorcado(this);
             panelCentro.add( panelDescripcion, BorderLayout.SOUTH);
-
 
         JPanel panelSur = new JPanel( );
         panelSur.setLayout( new BorderLayout( ) );
         add( panelSur, BorderLayout.SOUTH);
 
-            panelLetras = new PanelLetras(this);
+            panelLetras = new PanelLetra(this);
             panelSur.add(panelLetras, BorderLayout.WEST);
 
             panelEscogerLetra = new PanelEscogerLetras(this);
             panelSur.add(panelEscogerLetra, BorderLayout.CENTER );
-
-
     }
-    public void buscarPorLetra (){
+    public void validarExistenciaDeLaLetraEnLaPalabraEncriptada(){
         String letra = panelEscogerLetra.obtenerLetra();
         if (letra.isEmpty()){
-            JOptionPane.showMessageDialog(this, "Ingrese una letra");
+            JOptionPane.showMessageDialog(this, "INGRESE UNA LETRA");
         }
         else{
-            boolean existe = palabras.verificarLetra(letra);
-            String palabra = palabras.convertirListaString();
+            boolean existe = palabrasJuegoAhorcado.verificaExistenciaDeLaLetraEnElArreglo(letra);
             if (existe){
-                panelLetras.actualizarLetras(palabra);
-                if (palabras.getAciertos().equals(palabras.getLetrasAsteriscos().length())){
-                    JOptionPane.showMessageDialog(this, "VICTORIA");
+                panelLetras.actualizarLetras(palabrasJuegoAhorcado.getPalabraEncriptada());
+                if (palabrasJuegoAhorcado.verificarCantidadAciertosParaFinalizarJuego()){
+                    JOptionPane.showMessageDialog(this,
+                            "FELICIDADES TERMINASTE EL JUEGO");
                 }
             }
             else{
-                panelAhorcado.actualizarImagenAhorcado(palabras.getErrores());
-                if(palabras.getErrores() == 6){
-                    JOptionPane.showMessageDialog(this, "AHORCADO");
+                panelAhorcado.actualizarImagenAhorcado(palabrasJuegoAhorcado.getErrores());
+                if (palabrasJuegoAhorcado.verificarCantidadErroresParaFinalizarJuego()){
+                    JOptionPane.showMessageDialog(this, "HAS PERDIDO LA PALABRA ES:   "
+                    + palabrasJuegoAhorcado.getVizualizarPalabra());
                 }
             }
         }
-
     }
-
-
-    public void obtenerArreglo(){
-        palabras.convertirPalabras(palabras.getNumeroRandom());
-        palabras.encriptarPalabras();
-
+    public void validarPalabraCompleta(){
+        String palabra = panelEscogerLetra.obtenerLetra();
+        if (palabra.isEmpty()){
+            JOptionPane.showMessageDialog(this, "INGRESE LA PALABRA");
+        }
+        else {
+            if (palabrasJuegoAhorcado.getVizualizarPalabra().equals(palabra)){
+                JOptionPane.showMessageDialog(this,
+                        "FELICIDADES TERMINASTE EL JUEGO\n" + "LA PALABRA ES:  "
+                                + palabrasJuegoAhorcado.getVizualizarPalabra());
+            }
+            else {
+                palabrasJuegoAhorcado.setErrores(contador += 2);
+                panelAhorcado.actualizarImagenAhorcado(palabrasJuegoAhorcado.getErrores());
+                if (palabrasJuegoAhorcado.verificarCantidadErroresParaFinalizarJuego()){
+                    JOptionPane.showMessageDialog(this, "HAS PERDIDO LA PALABRA ES:   "
+                            + palabrasJuegoAhorcado.getVizualizarPalabra());
+                }
+            }
+        }
     }
-
-    public Palabras getPalabras()
+    public PalabrasJuegoDelAhorcado getPalabrasJuegoAhorcado()
     {
-        return palabras;
+        return palabrasJuegoAhorcado;
     }
-
-
-
-
-
-
-    /**
-     * (1) este metodo inicializa la interfaz instanciando la ventana de la InterfazGraficaUsuario
-     * @param args
-     */
+    public DescripcionPalabrasJuegoDelAhorcado getDescripcionPalabras(){
+        return descripcionPalabras;
+    }
     public static void main( String [ ] args )
     {
         try {
@@ -121,9 +120,7 @@ public class InterfazGraficaUsuario extends JFrame {
         catch( Exception e )
         {
             JOptionPane.showMessageDialog( null, e.getMessage( ),
-                    "Vuelve Intentarlo", JOptionPane.ERROR_MESSAGE );
+                    "SE HA PRESENTADO UN ERROR VUELVE A INTENTARLO", JOptionPane.ERROR_MESSAGE );
         }
     }
-
-
 }

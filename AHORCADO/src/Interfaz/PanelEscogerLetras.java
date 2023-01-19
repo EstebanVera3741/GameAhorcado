@@ -10,12 +10,14 @@ public class PanelEscogerLetras extends JPanel implements ActionListener {
 
     private InterfazGraficaUsuario principal;
     public static final String BUSCAR_LETRA = "Buscar Letra";
+    public static final String BUSCAR_PALABRA = "Buscar Palabra";
     private JTextField textField;
-    private JButton btnBuscarLinea;
+    private JButton btnBuscarLetra;
+    private JButton btnBuscarPalabra;
 
     public PanelEscogerLetras(InterfazGraficaUsuario principal){
 
-        TitledBorder borde = new TitledBorder( "Búsquedas" );
+        TitledBorder borde = new TitledBorder( "" );
         borde.setTitleColor( Color.BLUE );
         setBorder( borde );
 
@@ -26,38 +28,38 @@ public class PanelEscogerLetras extends JPanel implements ActionListener {
         textField = new JTextField( );
         add( textField );
 
-        btnBuscarLinea = new JButton( "Buscar Letra" );
-        btnBuscarLinea.setActionCommand( BUSCAR_LETRA);
-        btnBuscarLinea.addActionListener( this );
-        add( btnBuscarLinea );
+        btnBuscarLetra = new JButton( "BUSCAR LETRA" );
+        btnBuscarLetra.setActionCommand( BUSCAR_LETRA);
+        btnBuscarLetra.addActionListener( this );
+        add(btnBuscarLetra);
+
+        btnBuscarPalabra = new JButton( "BUSCAR PALABRA" );
+        btnBuscarPalabra.setActionCommand( BUSCAR_PALABRA);
+        btnBuscarPalabra.addActionListener( this );
+        add(btnBuscarPalabra);
 
 
         JPanel panelLetras = new JPanel( );
-        panelLetras.setLayout( new GridLayout( 4, 1, 0, 0 ) );
+        panelLetras.setLayout( new GridLayout( 2, 2, 10, 5 ) );
         add( panelLetras, BorderLayout.CENTER );
-
 
         JLabel labLetra = new JLabel();
         panelLetras.add( labLetra );
-
-
     }
-
     @Override
     public void actionPerformed (ActionEvent evento ){
-        String accionClick =evento.getActionCommand();
+        String accionClick = evento.getActionCommand();
         switch (accionClick){
             case BUSCAR_LETRA:
-                principal.buscarPorLetra();
+                principal.validarExistenciaDeLaLetraEnLaPalabraEncriptada();
+                break;
+            case BUSCAR_PALABRA:
+                principal.validarPalabraCompleta();
+                break;
         }
-
-
     }
     public String obtenerLetra( )
     {
-        return textField.getText( );
+        return textField.getText( ).toUpperCase();
     }
-
-
-
 }
