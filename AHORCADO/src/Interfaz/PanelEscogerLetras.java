@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 public class PanelEscogerLetras extends JPanel implements ActionListener {
 
     private InterfazGraficaUsuario principal;
-    public static final String BUSCAR_LETRA = "Buscar Letra";
-    public static final String BUSCAR_PALABRA = "Buscar Palabra";
+    public static final String BUSCAR_LETRA = "Search Letter";
+    public static final String BUSCAR_PALABRA = "Search Word";
     private JTextField textField;
     private JButton btnBuscarLetra;
     private JButton btnBuscarPalabra;
@@ -28,12 +28,12 @@ public class PanelEscogerLetras extends JPanel implements ActionListener {
         textField = new JTextField( );
         add( textField );
 
-        btnBuscarLetra = new JButton( "BUSCAR LETRA" );
+        btnBuscarLetra = new JButton( "SEARCH LETTER" );
         btnBuscarLetra.setActionCommand( BUSCAR_LETRA);
         btnBuscarLetra.addActionListener( this );
         add(btnBuscarLetra);
 
-        btnBuscarPalabra = new JButton( "BUSCAR PALABRA" );
+        btnBuscarPalabra = new JButton( "SEARCH WORD" );
         btnBuscarPalabra.setActionCommand( BUSCAR_PALABRA);
         btnBuscarPalabra.addActionListener( this );
         add(btnBuscarPalabra);

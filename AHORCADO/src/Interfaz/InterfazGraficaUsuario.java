@@ -18,7 +18,7 @@ public class InterfazGraficaUsuario extends JFrame {
 
 
     public InterfazGraficaUsuario(){
-        setTitle( " BIENVENIDO JUEGO EL AHORCADO " );
+        setTitle( " WELCOME HANGMAN GAME " );
         setSize( 1000, 730 );
         setResizable( false );
         setLocationRelativeTo( null );
@@ -61,7 +61,7 @@ public class InterfazGraficaUsuario extends JFrame {
     public void validarExistenciaDeLaLetraEnLaPalabraEncriptada(){
         String letra = panelEscogerLetra.obtenerLetra();
         if (letra.isEmpty()){
-            JOptionPane.showMessageDialog(this, "INGRESE UNA LETRA");
+            JOptionPane.showMessageDialog(this, "ENTER A LETTER");
         }
         else{
             boolean existe = palabrasJuegoAhorcado.verificaExistenciaDeLaLetraEnElArreglo(letra);
@@ -69,13 +69,13 @@ public class InterfazGraficaUsuario extends JFrame {
                 panelLetras.actualizarLetras(palabrasJuegoAhorcado.getPalabraEncriptada());
                 if (palabrasJuegoAhorcado.verificarCantidadAciertosParaFinalizarJuego()){
                     JOptionPane.showMessageDialog(this,
-                            "FELICIDADES TERMINASTE EL JUEGO");
+                            "CONGRATULATIONS YOU FINISHED THE GAME");
                 }
             }
             else{
                 panelAhorcado.actualizarImagenAhorcado(palabrasJuegoAhorcado.getErrores());
                 if (palabrasJuegoAhorcado.verificarCantidadErroresParaFinalizarJuego()){
-                    JOptionPane.showMessageDialog(this, "HAS PERDIDO LA PALABRA ES:   "
+                    JOptionPane.showMessageDialog(this, "YOU HAVE LOST THE WORD IS:   "
                     + palabrasJuegoAhorcado.getVizualizarPalabra());
                 }
             }
@@ -84,19 +84,19 @@ public class InterfazGraficaUsuario extends JFrame {
     public void validarPalabraCompleta(){
         String palabra = panelEscogerLetra.obtenerLetra();
         if (palabra.isEmpty()){
-            JOptionPane.showMessageDialog(this, "INGRESE LA PALABRA");
+            JOptionPane.showMessageDialog(this, "ENTER THE WORD");
         }
         else {
             if (palabrasJuegoAhorcado.getVizualizarPalabra().equals(palabra)){
                 JOptionPane.showMessageDialog(this,
-                        "FELICIDADES TERMINASTE EL JUEGO\n" + "LA PALABRA ES:  "
+                        "CONGRATULATIONS YOU FINISHED THE GAME\n" + "THE WORD IS:  "
                                 + palabrasJuegoAhorcado.getVizualizarPalabra());
             }
             else {
                 palabrasJuegoAhorcado.setErrores(contador += 2);
                 panelAhorcado.actualizarImagenAhorcado(palabrasJuegoAhorcado.getErrores());
                 if (palabrasJuegoAhorcado.verificarCantidadErroresParaFinalizarJuego()){
-                    JOptionPane.showMessageDialog(this, "HAS PERDIDO LA PALABRA ES:   "
+                    JOptionPane.showMessageDialog(this, "YOU HAVE LOST THE WORD IS:   "
                             + palabrasJuegoAhorcado.getVizualizarPalabra());
                 }
             }
@@ -120,7 +120,7 @@ public class InterfazGraficaUsuario extends JFrame {
         catch( Exception e )
         {
             JOptionPane.showMessageDialog( null, e.getMessage( ),
-                    "SE HA PRESENTADO UN ERROR VUELVE A INTENTARLO", JOptionPane.ERROR_MESSAGE );
+                    "AN ERROR OCCURRED, TRY AGAIN", JOptionPane.ERROR_MESSAGE );
         }
     }
 }

@@ -24,8 +24,8 @@ public class PalabrasJuegoDelAhorcado {
         palabrasParaAdivinar.put(5, "FRONTEND");
         palabrasParaAdivinar.put(6, "BACKEND");
         palabrasParaAdivinar.put(7, "LINUX");
-        palabrasParaAdivinar.put(8, "SERVIDOR");
-        palabrasParaAdivinar.put(9, "PROGRAMADOR");
+        palabrasParaAdivinar.put(8, "SERVER");
+        palabrasParaAdivinar.put(9, "PROGRAMMER");
         errores = 0;
         aciertos = 0;
         generarNumeroRandom();
